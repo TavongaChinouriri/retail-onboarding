@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retail-onboarding
+  namespace: retail
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: retail-onboarding
+  template:
+    metadata:
+      labels:
+        app: retail-onboarding
+    spec:
+      containers:
+      - name: retail-onboarding
+        image: kaributechworkflows/retail-onboarding:${IMAGE_TAG}
+        ports:
+        - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: retail-onboarding-secrets
